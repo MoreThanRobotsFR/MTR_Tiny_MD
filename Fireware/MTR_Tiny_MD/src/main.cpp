@@ -11,7 +11,6 @@ void printDRV8316Status();
 // magnetic sensor instance - MagneticSensorI2C
 MagneticSensorI2C sensor = MagneticSensorI2C(AS5600_I2C);
 
-
 // BLDC motor & driver instance
 BLDCMotor motor = BLDCMotor(11);
 DRV8316Driver6PWM driver = DRV8316Driver6PWM(0,1,2,3,4,6,7,false); // use the right pins for your setup!
