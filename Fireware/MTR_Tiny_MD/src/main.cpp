@@ -2,97 +2,117 @@
 #include <SimpleFOC.h>
 #include <SimpleFOCDrivers.h>
 #include "drivers/drv8316/drv8316.h"
+#include <Adafruit_NeoPixel.h>
+#include "Tiny_MD_Params.h"
 
 #define TARGET_RP2040
+#define SIMPLEFOC_DRV8316
 
 // Prototype for the function
 void printDRV8316Status();
+
+// NeoPixel
+Adafruit_NeoPixel pixels(NUMPIXELS, WS2812B_PIN, NEO_GRB + NEO_KHZ800);
 
 // magnetic sensor instance - MagneticSensorI2C
 MagneticSensorI2C sensor = MagneticSensorI2C(AS5600_I2C);
 
 // BLDC motor & driver instance
 BLDCMotor motor = BLDCMotor(11);
-DRV8316Driver6PWM driver = DRV8316Driver6PWM(0,1,2,3,4,6,7,false); // use the right pins for your setup!
+DRV8316Driver6PWM driver = DRV8316Driver6PWM(DRV8316_INH_A, DRV8316_INL_A, DRV8316_INH_B, DRV8316_INL_B, DRV8316_INH_C, DRV8316_INL_C, DRV8316_SPI_CS, false, DRV8316_DRV_OFF, DRV8316_nFAULT);
 
 // velocity set point variable
 float target_velocity = 0;
 // instantiate the commander
 Commander command = Commander(Serial);
-void doTarget(char* cmd) { command.scalar(&target_velocity, cmd); }
+void doTarget(char *cmd) { command.scalar(&target_velocity, cmd); }
 
-void setup() {
+void setup()
+{
 
-  // initialise magnetic sensor hardware
-  sensor.init();
-  // link the motor to the sensor
-  motor.linkSensor(&sensor);
+	// initialise magnetic sensor hardware
+	sensor.init();
+	// link the motor to the sensor
+	motor.linkSensor(&sensor);
 
-  // driver config
-  // power supply voltage [V]
-  driver.voltage_power_supply = 12;
-  driver.init();
-  // link the motor and the driver
-  motor.linkDriver(&driver);
+	// driver config
+	// power supply voltage [V]
+	driver.voltage_power_supply = 12;
+	driver.init();
+	// link the motor and the driver
+	motor.linkDriver(&driver);
 
-  // set motion control loop to be used
-  motor.controller = MotionControlType::velocity;
+	// set motion control loop to be used
+	motor.controller = MotionControlType::velocity;
 
-  // contoller configuration
-  // default parameters in defaults.h
+	// contoller configuration
+	// default parameters in defaults.h
 
-  // velocity PI controller parameters
-  motor.PID_velocity.P = 0.2f;
-  motor.PID_velocity.I = 20;
-  motor.PID_velocity.D = 0;
-  // default voltage_power_supply
-  motor.voltage_limit = 6;
-  // jerk control using voltage voltage ramp
-  // default value is 300 volts per sec  ~ 0.3V per millisecond
-  motor.PID_velocity.output_ramp = 1000;
+	// velocity PI controller parameters
+	motor.PID_velocity.P = 0.2f;
+	motor.PID_velocity.I = 20;
+	motor.PID_velocity.D = 0;
+	// default voltage_power_supply
+	motor.voltage_limit = 6;
+	// jerk control using voltage voltage ramp
+	// default value is 300 volts per sec  ~ 0.3V per millisecond
+	motor.PID_velocity.output_ramp = 1000;
 
-  // velocity low pass filtering
-  // default 5ms - try different values to see what is the best.
-  // the lower the less filtered
-  motor.LPF_velocity.Tf = 0.01f;
+	// velocity low pass filtering
+	// default 5ms - try different values to see what is the best.
+	// the lower the less filtered
+	motor.LPF_velocity.Tf = 0.01f;
 
-  // use monitoring with serial
-  Serial.begin(115200);
-  // comment out if not needed
-  motor.useMonitoring(Serial);
+	// use monitoring with serial
+	Serial.begin(115200);
 
-  // initialize motor
-  motor.init();
-  // align sensor and start FOC
-  motor.initFOC();
+	// comment out if not needed
+	motor.useMonitoring(Serial);
 
-  // add target command T
-  command.add('T', doTarget, "target velocity");
+	// initialize motor
+	motor.init();
+	// align sensor and start FOC
+	motor.initFOC();
 
-  Serial.println(F("Motor ready."));
-  Serial.println(F("Set the target velocity using serial terminal:"));
-  _delay(1000);
+	// add target command T
+	command.add('T', doTarget, "target velocity");
+
+	Serial.println(F("Motor ready."));
+	Serial.println(F("Set the target velocity using serial terminal:"));
+	_delay(1000);
+	pixels.begin(); // INITIALIZE NeoPixel strip object (REQUIRED)
+
+	printDRV8316Status();
 }
 
-void loop() {
+void loop()
+{
+	Red		= random(0, 255);
+	Green	= random(0, 255);
+	Blue	= random(0, 255);
+	pixels.clear(); // Set all pixel colors to 'off'
+	pixels.setPixelColor(0, pixels.Color(Red, Green, Blue));
+ 	pixels.show();   // Send the updated pixel colors to the hardware.
 
-  // Sensor update
-  sensor.update();
+	// Sensor update
+	sensor.update();
 
-  // main FOC algorithm function
-  motor.loopFOC();
+	// main FOC algorithm function
+	motor.loopFOC();
 
-  // Motion control function
-  motor.move(target_velocity);
+	// Motion control function
+	motor.move(target_velocity);
 
-  // function intended to be used with serial plotter to monitor motor variables
-  motor.monitor();
+	// function intended to be used with serial plotter to monitor motor variables
+	motor.monitor();
 
-  // user communication
-  command.run();
+	// user communication
+	command.run();
+
 }
 
-void printDRV8316Status() {
+void printDRV8316Status()
+{
 	DRV8316Status status = driver.getStatus();
 	Serial.println("DRV8316 Status:");
 	Serial.print("Fault: ");
