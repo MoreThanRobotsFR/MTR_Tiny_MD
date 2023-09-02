@@ -1,5 +1,7 @@
 #include <Arduino.h>
 #include <SimpleFOC.h>
+#include <Wire.h>
+#include <SPI.h>
 #include <SimpleFOCDrivers.h>
 #include "drivers/drv8316/drv8316.h"
 #include <Adafruit_NeoPixel.h>
@@ -18,7 +20,7 @@ Adafruit_NeoPixel pixels(NUMPIXELS, WS2812B_PIN, NEO_GRB + NEO_KHZ800);
 MagneticSensorI2C sensor = MagneticSensorI2C(AS5600_I2C);
 
 // BLDC motor & driver instance
-BLDCMotor motor = BLDCMotor(11);
+BLDCMotor motor = BLDCMotor(13);
 DRV8316Driver6PWM driver = DRV8316Driver6PWM(DRV8316_INH_A, DRV8316_INL_A, DRV8316_INH_B, DRV8316_INL_B, DRV8316_INH_C, DRV8316_INL_C, DRV8316_SPI_CS, false, DRV8316_DRV_OFF, DRV8316_nFAULT);
 
 // velocity set point variable
@@ -29,6 +31,7 @@ void doTarget(char *cmd) { command.scalar(&target_velocity, cmd); }
 
 void setup()
 {
+	SPI.begin();
 
 	// initialise magnetic sensor hardware
 	sensor.init();
@@ -37,7 +40,7 @@ void setup()
 
 	// driver config
 	// power supply voltage [V]
-	driver.voltage_power_supply = 12;
+	driver.voltage_power_supply = 24;
 	driver.init();
 	// link the motor and the driver
 	motor.linkDriver(&driver);
@@ -97,6 +100,16 @@ void loop()
 	// Sensor update
 	sensor.update();
 
+	Serial.print((sensor.getMechanicalAngle()*180/PI));
+	Serial.print(",");
+	Serial.print((sensor.getVelocity()*180/PI));
+	Serial.print(",");
+	Serial.print((sensor.getFullRotations()));
+	Serial.print(",");
+	Serial.print((motor.shaft_angle*180/PI));
+	Serial.print(",");
+	Serial.println((motor.shaft_velocity*180/PI));
+
 	// main FOC algorithm function
 	motor.loopFOC();
 
@@ -104,10 +117,12 @@ void loop()
 	motor.move(target_velocity);
 
 	// function intended to be used with serial plotter to monitor motor variables
-	motor.monitor();
+	//motor.monitor();
 
 	// user communication
 	command.run();
+	
+	//delay(500);
 
 }
 
