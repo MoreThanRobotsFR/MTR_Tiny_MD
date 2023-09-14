@@ -31,7 +31,11 @@ void doTarget(char *cmd) { command.scalar(&target_velocity, cmd); }
 
 void setup()
 {
-	SPI.begin();
+	// Set pin DRV8316_nSLEEP as output and set it high to enable the DRV8316
+	pinMode(DRV8316_nSLEEP, OUTPUT);
+	digitalWrite(DRV8316_nSLEEP, HIGH);
+
+	delay(1000);
 
 	// initialise magnetic sensor hardware
 	sensor.init();
