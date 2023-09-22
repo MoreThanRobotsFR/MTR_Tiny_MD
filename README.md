@@ -49,4 +49,4 @@ This changelog provides a summary of the updates and changes made to the Motor D
 **Note:** 
 - Please refer to the [schematic](Docs/MTR_Tiny_MD.pdf) for detailed information about the MTR Tiny Motor Driver.
 - Please refer to the [presentation](Docs/MTR_MD.pdf) for detailed information about the MTR Tiny Motor Driver.
-- Please refer to the [bill of materials](Hardware\MTR_Tiny_MD\bom/bom.html) for detailed information about the MTR Tiny Motor Driver.
+- Please refer to the [bill of materials](Hardware/MTR_Tiny_MD/bom/bom.html) for detailed information about the MTR Tiny Motor Driver.
