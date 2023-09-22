@@ -3,9 +3,6 @@
 
  [![IMAGE ALT TEXT](http://img.youtube.com/vi/xt2y6jAOXSE/0.jpg)](https://www.youtube.com/watch?v=xt2y6jAOXSE "DRV8316 + RP2040 | SimpleFOC | MTR Tiny Motor Driver")
 
-    <iframe width="560" height="315" src="https://www.youtube.com/embed/xt2y6jAOXSE" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
-    </iframe>
-
 </p>
 
 # Changelog
@@ -48,14 +45,8 @@ This changelog provides a summary of the updates and changes made to the Motor D
     <em>Back</em>
 </p>
 
-<iframe
-    width="640"
-    height="480"
-    src="https://www.youtube.com/embed/xt2y6jAOXSE"
-    frameborder="0"
-    allow="autoplay; encrypted-media"
-    allowfullscreen
->
-</iframe>
 
-**Note:** Please refer to the [schematic](Docs/MTR_Tiny_MD.pdf) for detailed information about the MTR Tiny Motor Driver.
+**Note:** 
+- Please refer to the [schematic](Docs/MTR_Tiny_MD.pdf) for detailed information about the MTR Tiny Motor Driver.
+- Please refer to the [presentation](Docs/MTR_MD.pdf) for detailed information about the MTR Tiny Motor Driver.
+- Please refer to the [bill of materials](Hardware\MTR_Tiny_MD\bom/bom.html) for detailed information about the MTR Tiny Motor Driver.
