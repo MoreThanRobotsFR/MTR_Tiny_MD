@@ -1,6 +1,9 @@
 # MTR_Tiny_MD
+<p align="center">
 
  [![IMAGE ALT TEXT](http://img.youtube.com/vi/xt2y6jAOXSE/0.jpg)](https://www.youtube.com/watch?v=xt2y6jAOXSE "DRV8316 + RP2040 | SimpleFOC | MTR Tiny Motor Driver")
+
+</p>
 
 # Changelog
 
@@ -24,19 +27,22 @@ This changelog provides a summary of the updates and changes made to the Motor D
 - Rev: 1.2.2 Date: 20/09/2023
     - Update: Add low pass filter for Reset button
 
-Front
-[MTR_Tiny_MD.F.png](Images/MTR_Tiny_MD.F.png)
+# Overview
 
 <p align="center">
     <a>
-        <img src="Images/MTR_Tiny_MD.F.png" width="100%" height="100%">
+        <img src="Images/MTR_Tiny_MD.F.png" width="50%" height="50%">
     </a>
     <br>
     <em>Front</em>
-
 </p>
 
-Back
-[MTR_Tiny_MD.B.png](Images/MTR_Tiny_MD.B.png)
+<p align="center">
+    <a>
+        <img src="Images/MTR_Tiny_MD.B.png" width="50%" height="50%">
+    </a>
+    <br>
+    <em>Back</em>
+</p>
 
-**Note:** Please refer to the schematic for detailed information about the MTR Tiny Motor Driver.
+**Note:** Please refer to the [schematic](Docs/MTR_Tiny_MD.pdf) for detailed information about the MTR Tiny Motor Driver.
