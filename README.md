@@ -27,6 +27,15 @@ This changelog provides a summary of the updates and changes made to the Motor D
 Front
 [MTR_Tiny_MD.F.png](Images/MTR_Tiny_MD.F.png)
 
+<p align="center">
+    <a>
+        <img src="Images/MTR_Tiny_MD.F.png" width="100%" height="100%">
+    </a>
+    <br>
+    <em>Front</em>
+
+</p>
+
 Back
 [MTR_Tiny_MD.B.png](Images/MTR_Tiny_MD.B.png)
 
