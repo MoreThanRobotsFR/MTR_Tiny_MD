@@ -32,7 +32,7 @@ The code is currently a work in progress and may have bugs or incomplete functio
 Future development plans for this code may include:
 - Adding additional functionality, such as position control or torque control.
 - Optimizing the code for better performance or efficiency.
-- Adding support for other BLDC motor drivers or sensors.
+- ...and more!
 
 ## Note
 Please note that this code is still in progress and may not be fully functional or optimized. Use it at your own risk and make sure to test it in a controlled environment before using it in any critical or potentially dangerous applications. Contributions and feedback are welcome to help improve the code.
