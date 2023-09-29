@@ -25,6 +25,7 @@ DRV8316Driver6PWM driver = DRV8316Driver6PWM(DRV8316_INH_A, DRV8316_INL_A, DRV83
 
 // velocity set point variable
 float target_velocity = 0;
+
 // instantiate the commander
 Commander command = Commander(Serial);
 void doTarget(char *cmd) { command.scalar(&target_velocity, cmd); }
